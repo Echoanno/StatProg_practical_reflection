@@ -1,0 +1,46 @@
+Exercise 1: Naming Functions
+
+A good function name is a verb or short phrase that tells you what the function does without having to read its body. Badly named functions (f1, do_stuff, helper2) force every reader — including future-you — to re-derive intent from the code each time.
+
+1.Read the source code for each of the following two functions, puzzle out what they do, and then brainstorm better names.
+
+```{r}
+f1 <- function(string, prefix) {
+  str_sub(string, 1, str_length(prefix)) == prefix
+}
+# This function checks whether a given string starts with a specified prefix. It extracts the beginning of the string with the same length as the prefix and compares it to the prefix.Better name:starts_with_prefix
+f3 <- function(x, y) {
+  rep(y, length.out = length(x)) #把y重复直到等于x元素个数
+}
+# This function repeats the value y so that the output has the same length as x. It ensures that y matches the length of x. Better name: repeat_to_length
+```
+
+2.Make a case for why norm_r(), norm_d() etc. would be better than rnorm(), dnorm()1. Make a case for the opposite. How could you make the names even clearer?
+
+Case for norm_r(), norm_d() (distribution first)
+Using names like norm_r() and norm_d() makes the distribution the primary concept and the operation secondary.
+Improved grouping and discover ability
+More intuitive for beginners
+Consistent with object → action logic
+
+Case for rnorm(), dnorm() (operation first)
+R’s existing naming (rnorm, dnorm, etc.) prioritizes the type of operation.
+Consistency across all distributions
+The prefixes (r, d, p, q) are standardized and widely understood.
+r = random
+d = density
+p = probability
+q = quantile
+Efficient for experienced users
+If you know you want random numbers, you type r... and choose the distribution.
+This supports a workflow of “what do I want to do?” → “to which distribution?”
+Compact and fast to type
+Short names reduce typing overhead and visual clutter.
+
+even clearer: 
+Fully descriptive (maximum clarity); 
+Tidy-style compromise
+r_norm()
+d_norm()
+p_norm()
+q_norm()
