@@ -1,8 +1,8 @@
-### Reflection Log – Session 1
+## Reflection Log
+
+### Week 1 — Introduction, CLI & Git basics
 
 In this session, I worked through the setup of the core tools (R, RStudio, Quarto, Git, and command line) and reviewed basic data analysis and visualisation techniques in R. The main focus was not only on executing commands, but on understanding how these tools fit together in a data science workflow.
-
-
 
 #### 1. Command Line and File Handling
 
@@ -14,8 +14,6 @@ One issue I encountered was incorrect file paths when moving files. For example,
 * always checking file locations using `ls` before executing commands
 
 I also learned that small mistakes in filenames (e.g., adding an extra “s”) immediately cause errors, which reinforced the need for precision in CLI work.
-
-
 
 #### 2. Quarto and Rendering
 
@@ -29,8 +27,6 @@ A key insight was that:
 I initially failed to display an image because the filename in the code did not match the actual file. This clarified that:
 
 > file paths in Quarto must exactly match both location and filename.
-
-
 
 #### 3. Git Basics
 
@@ -56,8 +52,6 @@ I also learned the difference between:
 
 and how they correspond to the Git workflow.
 
-
-
 #### 4. Practise in  R
 
 I worked with the `palmerpenguins` dataset and clarified an important concept:
@@ -76,8 +70,6 @@ and how to explore data using:
 * `summary()`
 * `glimpse()`
 
-
-
 #### 5. Debugging dplyr and Pipe Issues
 
 I encountered several errors when using `%>%` and `filter()`:
@@ -95,8 +87,6 @@ This helped me understand that:
 * packages like `dplyr` must be explicitly loaded
 * pipe operations must be executed as a complete block
 
-
-
 #### 6. ggplot2 Errors and Fixes
 
 I also encountered a ggplot error:
@@ -113,8 +103,6 @@ I learned when using pipes, it is safer to write:
 ggplot(data = ., aes(...))
 ```
 
-
-
 #### 7. Handling Missing Data
 
 When creating plots, I received a warning:
@@ -129,8 +117,6 @@ I learned that:
 * ggplot automatically removes rows with `NA`
 
 and that missing data should be considered explicitly when analysing results.
-
-
 
 #### 8. Data Transformation and Visualisation
 
@@ -147,8 +133,6 @@ Key understanding:
 
 This is important when variables have different units (e.g., mm vs grams).
 
-
-
 #### 9. General Reflection
 
 Overall, this session highlighted that many errors were not due to complex concepts, but due to:
@@ -162,8 +146,6 @@ The most important takeaway is:
 
 > data analysis is not just about writing code, but about understanding how tools, data, and workflows interact.
 
-
-
 #### 10. Next Steps
 
 For future sessions, I aim to:
@@ -171,3 +153,20 @@ For future sessions, I aim to:
 * improve fluency with Git workflows (especially GitHub integration)
 * reduce debugging time by systematically checking errors (data → functions → environment)
 * structure my work more clearly using Quarto
+
+### Week 2 — Scripts, Functions & Refactoring
+
+This week, I worked extensively on writing, testing, and refactoring functions in R. One key function I developed was `plot_penguin_bills()`, where I initially focused on generating a scatter plot for a given penguin species. I later refactored this function to improve its design by introducing proper parameterisation (e.g., species, variables, and title) and adding input validation. In particular, I implemented checks to ensure that the species exists, that the selected columns are present in the dataset, and that they are numeric. This was guided by the principle that **good functions should not only work, but also fail clearly and informatively**.
+
+I also applied the **DRY (Don’t Repeat Yourself)** and **Single Responsibility Principle** when refactoring a monolithic function (`penguin_report()`) into smaller helper functions. Originally, the function handled loading, cleaning, filtering, summarising, and plotting in one block. I split it into separate functions such as `load_penguins()`, `clean_penguins()`, `filter_species()`, `summarise_penguins()`, and `plot_penguins()`. This made the top-level function read like a sequence of steps, improving readability and making each component independently testable.
+
+I used an LLM to help improve my function design and debugging process. One prompt I used was:
+
+> "You are an expert R programmer. Refactor this monolithic function into smaller helper functions, each with a single responsibility, and ensure the top-level function is clear and readable."
+
+The response was useful in identifying how to structure helper functions, but I did not accept it blindly. I adapted the suggestions to match the coding style used in the course, simplified some parts, and ensured I fully understood each change (e.g., how tidy evaluation works and when to use `{{ }}` versus `.data[[ ]]`). I also used the LLM to debug issues such as incorrect argument types and unexpected ggplot behaviour.
+
+One R function I encountered this week that I had not used before is `cli::cli_abort()`. Unlike the base R `stop()` function, `cli_abort()` produces structured and more informative error messages, including clear highlighting of arguments and values. This is particularly useful when writing user-facing functions, as it improves debuggability and user experience. Additionally, I explored `dplyr::across()`, which allows applying the same operation to multiple columns efficiently, making summarisation code more concise and scalable.
+
+Overall, this week helped me move from simply writing working code to writing **well-structured, reusable, and robust functions**, with clearer separation of concerns and better error handling.
+
